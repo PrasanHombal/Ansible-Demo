@@ -1,0 +1,348 @@
+---
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/rest/applications/910/nodes"
+  tasks:
+    - name: Reading server nodes
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+    - name: Server Nodes List
+      ansible.builtin.debug:
+        var: result.content
+        
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/alerting/rest/v1/applications/838/health-rules/9554"
+  tasks:
+    - name: Reading CPU Usage
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/alerting/rest/v1/applications/838/health-rules/38755"
+  tasks:
+    - name: Reading Disk Usage
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+    - name: Disk Space ALert for E Drive
+      ansible.builtin.debug:
+        var: result.content
+    - name: CPU Usage for MT2
+      ansible.builtin.debug:
+        var: result.content
+        
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/alerting/rest/v1/applications/838/health-rules/42839"
+  tasks:
+    - name: Reading Memory Usage
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+    - name: Memory Swap Usage
+      ansible.builtin.debug:
+        var: result.content
+
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/alerting/rest/v1/applications/838/health-rules/43342"
+  tasks:
+    - name: Reading DiskDBVolume
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+    - name: Disk Space Alert I & L Drive
+      ansible.builtin.debug:
+        var: result.content
+
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/alerting/rest/v1/applications/838/health-rules/50286"
+  tasks:
+    - name: Reading DiskSpace Alert Recorder
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+    - name: Disk Space Alert Recorder
+      ansible.builtin.debug:
+        var: result.content
+        
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/alerting/rest/v1/applications/90/health-rules/50530"
+  tasks:
+    - name: VCS - Machine Availibility
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+    - name: VCS - Machine Availibility
+      ansible.builtin.debug:
+        var: result.content
+
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/alerting/rest/v1/applications/838/health-rules/10049"
+  tasks:
+    - name: AppUptime
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+    - name: AppUptime
+      ansible.builtin.debug:
+        var: result.content
+
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/alerting/rest/v1/applications/90/health-rules/41456"
+  tasks:
+    - name: VCS -DB Long Running Queries
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+    - name: VCS -DB Long Running Queries
+      ansible.builtin.debug:
+        var: result.content
+
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/alerting/rest/v1/applications/90/health-rules/50530"
+  tasks:
+    - name: Database Availibility
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+    - name: Database Availibility
+      ansible.builtin.debug:
+        var: result.content
+
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/alerting/rest/v1/applications/838/health-rules/42875"
+  tasks:
+    - name: FISUptime
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+    - name: FISUptime
+      ansible.builtin.debug:
+        var: result.content
+
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/alerting/rest/v1/applications/838/health-rules/41441"
+  tasks:
+    - name: JVM GC
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+    - name: JVM GC
+      ansible.builtin.debug:
+        var: result.content
+
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/alerting/rest/v1/applications/838/health-rules/9550"
+  tasks:
+    - name: JVM Heap Usage
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+    - name: JVM Heap Usage
+      ansible.builtin.debug:
+        var: result.content
+
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/alerting/rest/v1/applications/92/health-rules/51008"
+  tasks:
+    - name: FIS Grizzly Monitor-DBMS
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+    - name: FIS Grizzly Monitor-DBMS
+      ansible.builtin.debug:
+        var: result.content
+
+- name: uri module demo
+  hosts: localhost
+  become: false
+  vars:
+    server: "https://verintamericas.saas.appdynamics.com"
+    endpoint: "/controller/alerting/rest/v1/applications/92/health-rules/51008"
+  tasks:
+    - name: FIS Grizzly Monitor-FIS
+      ansible.builtin.uri:
+        url: "{{ server }}{{ endpoint }}"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      register: result
+
+    - name: FIS Grizzly Monitor-FIS
+      ansible.builtin.debug:
+        var: result.content
+        
+        
+        
+        
