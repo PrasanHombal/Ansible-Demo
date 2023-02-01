@@ -4,7 +4,7 @@
   become: false
   vars:
     server: "https://verintamericas.saas.appdynamics.com"
-    endpoint: "/controller/alerting/rest/v1/applications/3420/health-rules"
+    endpoint: "/controller/alerting/rest/v1/applications/4358/health-rules"
   tasks:
     - name: Reading CPU Usage-QA2
       ansible.builtin.uri:
