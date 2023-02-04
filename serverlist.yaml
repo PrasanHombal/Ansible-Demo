@@ -4,9 +4,9 @@
   become: false
   vars:
     server: "https://verintamericas.saas.appdynamics.com"
-    endpoint: "/controller/alerting/rest/v1/applications/4358/health-rules"
+    endpoint: "/controller/rest/applications?output=json"
   tasks:
-    - name: Reading CPU Usage-QA2
+    - name: Reading server nodes
       ansible.builtin.uri:
         url: "{{ server }}{{ endpoint }}"
         user: Sankumar@verintamericas
@@ -18,7 +18,52 @@
         timeout: 30
       register: result
 
-    - name: CPU Usage for QA2
+    - name: Initialize list of IDs
+      set_fact:
+       id_list: []
+
+    - name: Extract IDs
+      set_fact:
+       id_list: "{{ id_list + [item.id] }}"
+      loop: "{{ result.content }}"
+      when: item.name is search("VCS-WFO-")
+
+    - name: Calling Health checks
+      ansible.builtin.uri:
+        url: "https://verintamericas.saas.appdynamics.com/controller/alerting/rest/v1/applications/{{item}}/health-rules"
+        user: Sankumar@verintamericas
+        password: QAZ123plm$$
+        force_basic_auth: yes
+        return_content: yes
+        method: GET
+        status_code: 200
+        timeout: 30
+      loop: "{{ id_list }}"
+      register: respo
+
+    - name: Reading the health-rules
       ansible.builtin.debug:
-        var: result.content
-        
+        var: respo.results
+
+    - name: Initialize list of health rules
+      set_fact:
+       health_rules: []
+
+    - name: Extract health_rules
+      set_fact:
+       health_rules: "{{ health_rules + [item.json] }}"
+      loop: "{{ respo.results }}"
+
+    - name: Create file
+      lineinfile:
+       path: result.csv
+       line: "Monitor Name, Enabled"
+       state: present
+       create: yes
+
+
+    - name: Write health rules to CSV file
+      lineinfile:
+       dest: result.csv
+       line: "{{ item.name }},{{ item.enabled }}"
+      with_items: "{{ health_rules[0] }}"
