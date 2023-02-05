@@ -27,8 +27,8 @@
     # Fetch only the Environments whose name include the string 'VCS-WFO-' and initialze the id_list
     - name: Extract IDs
       set_fact:
-        name_id_map: 
-         - "VCS-WFO-inst": 2640
+        name_id_map: "{{ name_id_map|default({})|combine({item.name: item.id}) }}"
+      loop: "{{ result.content }}"
     
     # Call the health-rules API for the fetched environments
     - name: Calling Health checks
@@ -54,7 +54,7 @@
       
     - name: Create file
       lineinfile:
-       path: Audit_Insp_Report.csv
+       path: Audit_Insp_Report.xsls
        line: "Environment Name, Monitor Name, Enabled"
        state: present
        create: yes
@@ -62,7 +62,7 @@
     # Write the health_rules to created CSV file
     - name: Write health rules to CSV file
       lineinfile:
-       dest: Audit_Insp_Report.csv
+       dest: Audit_Insp_Report.xsls
        line: "{{ item.0.key }}, {{ item.1.name }}, {{ item.1.enabled }}"
       loop: "{{ health_rules | dict2items | subelements('value') }}"
 
