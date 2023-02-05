@@ -6,6 +6,7 @@
     server: "https://verintamericas.saas.appdynamics.com"
     endpoint: "/controller/rest/applications?output=json"
   tasks:
+    # Fetch the list of AppD application Ids
     - name: Reading server nodes
       ansible.builtin.uri:
         url: "{{ server }}{{ endpoint }}"
@@ -17,17 +18,20 @@
         status_code: 200
         timeout: 30
       register: result
-
+      
+    # Declare empty array object to store the fetched AppD application Ids
     - name: Initialize list of IDs
       set_fact:
        id_list: []
 
+    # Fetch only the Environments whose name include the string 'VCS-WFO-' and initialze the id_list
     - name: Extract IDs
       set_fact:
        id_list: "{{ id_list + [item.id] }}"
       loop: "{{ result.content }}"
       when: item.name is search("VCS-WFO-")
 
+    # Call the health-rules API for the fetched environments 
     - name: Calling Health checks
       ansible.builtin.uri:
         url: "https://verintamericas.saas.appdynamics.com/controller/alerting/rest/v1/applications/{{item}}/health-rules"
@@ -40,28 +44,27 @@
         timeout: 30
       loop: "{{ id_list }}"
       register: respo
-
-    - name: Reading the health-rules
-      ansible.builtin.debug:
-        var: respo.results
-
+    
+    # Declare empty array object to store the fetched health-rules to process it further
     - name: Initialize list of health rules
       set_fact:
        health_rules: []
 
+    # Initialize health_rules object with the fetched data 
     - name: Extract health_rules
       set_fact:
        health_rules: "{{ health_rules + [item.json] }}"
       loop: "{{ respo.results }}"
 
+    # Create a csv file which will hold the Audit inspection Report
     - name: Create file
       lineinfile:
-       path: result.csv
+       path: Audit_Insp_Report.csv
        line: "Monitor Name, Enabled"
        state: present
        create: yes
 
-
+    # Write the health_rules to created CSV file 
     - name: Write health rules to CSV file
       lineinfile:
        dest: result.csv
